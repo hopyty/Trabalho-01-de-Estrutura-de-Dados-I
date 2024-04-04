@@ -1,0 +1,204 @@
+Questão 1 - Considere o seguinte algoritmo
+
+ (i = 0):
+temp = vetor[0] = 0
+vetor[0] = vetor[9 - 0] = vetor[9] = 9
+vetor[9 - 0] = temp = 0
+Vetor atualizado: {9, 1, 2, 34, 5, 6, 7, 8, 0}
+
+ (i = 1):
+temp = vetor[1] = 1
+vetor[1] = vetor[9 - 1] = vetor[8] = 8
+vetor[9 - 1] = temp = 1
+Vetor atualizado: {9, 8, 2, 34, 5, 6, 7, 1, 0}
+
+ (i = 2):
+temp = vetor[2] = 2
+vetor[2] = vetor[9 - 2] = vetor[7] = 7
+vetor[9 - 2] = temp = 2
+Vetor atualizado: {9, 8, 7, 34, 5, 6, 2, 1, 0}
+
+vetor ordenado: {9, 8, 7, 6, 5, 34, 2, 1, 0}.
+
+Questão 2 - Escreva um programa que receba como entrada um vetor de inteiros com tamanho N (N > 0) e verifique se ele está ordenado de forma não decrescente. O programa deve exibir "SIM" caso o vetor esteja ordenado e "NAO" caso contrário.
+
+def verifica_ordem(vetor):
+    if len(vetor) <= 1:
+        return True
+    for i in range(len(vetor) - 1):
+        if vetor[i] > vetor[i + 1]:
+            return False
+    
+    return True
+def main():
+
+    tamanho = int(input("Digite o tamanho do vetor: "))
+    vetor = []
+    for i in range(tamanho):
+        elemento = int(input("Digite o elemento {}: ".format(i + 1)))
+        vetor.append(elemento)
+    
+    if verifica_ordem(vetor):
+        print("SIM")
+    else:
+        print("NAO")
+
+if __name__ == "__main__":
+    main()
+
+ 
+
+Questão 3 - Crie um tabuleiro de jogo da velha, usando uma matrizes de caracteres (char) 3×3, onde o usuário pede o número da linha (1 até 3) e o da coluna (1 até 3). A cada vez que o usuário entrar com esses dados, colocar um ‘X’ ou ‘O’ no local selecionado.
+
+def imprimir_tabuleiro(tabuleiro):
+    print("  1 2 3")
+    for i in range(3):
+        print(i + 1, end=" ")
+        for j in range(3):
+            print(tabuleiro[i][j], end=" ")
+        print()
+
+def verificar_vitoria(tabuleiro, jogador):
+ 
+    for i in range(3):
+        if all(tabuleiro[i][j] == jogador for j in range(3)) or all(tabuleiro[j][i] == jogador for j in range(3)):
+            return True
+ 
+    if all(tabuleiro[i][i] == jogador for i in range(3)) or all(tabuleiro[i][2 - i] == jogador for i in range(3)):
+        return True
+    return False
+
+def main():
+    tabuleiro = [[' ' for _ in range(3)] for _ in range(3)]
+    jogador = 'X'
+
+    while True:
+        imprimir_tabuleiro(tabuleiro)
+        linha = int(input("Digite o número da linha (1 a 3): "))
+        coluna = int(input("Digite o número da coluna (1 a 3): "))
+
+        if linha < 1 or linha > 3 or coluna < 1 or coluna > 3:
+            print("Entrada inválida. Por favor, insira números entre 1 e 3.")
+            continue
+        
+        if tabuleiro[linha - 1][coluna - 1] != ' ':
+            print("Essa posição já está ocupada. Tente novamente.")
+            continue
+        
+        tabuleiro[linha - 1][coluna - 1] = jogador
+
+        if verificar_vitoria(tabuleiro, jogador):
+            imprimir_tabuleiro(tabuleiro)
+            print(f"O jogador '{jogador}' venceu!")
+            break
+        
+        jogador = 'O' if jogador == 'X' else 'X'
+
+if __name__ == "__main__":
+    main()
+ 
+
+Questão 4 - Leia uma matriz 10 x 10 e escreva a localização (linha e a coluna) do maior valor.
+
+
+def encontrar_maior_valor(matriz):
+    maior_valor = matriz[0][0]
+    linha_maior_valor = 0
+    coluna_maior_valor = 0
+
+    for i in range(len(matriz)):
+        for j in range(len(matriz[i])):
+            if matriz[i][j] > maior_valor:
+                maior_valor = matriz[i][j]
+                linha_maior_valor = i
+                coluna_maior_valor = j
+    
+    return linha_maior_valor, coluna_maior_valor
+
+def main():
+ 
+    matriz = []
+    for i in range(10):
+        linha = list(map(int, input(f"Digite os 10 valores da linha {i+1}: ").split()))
+        matriz.append(linha)
+    
+ 
+    linha_maior, coluna_maior = encontrar_maior_valor(matriz)
+ 
+    print(f"A localização do maior valor ({matriz[linha_maior][coluna_maior]}) é:")
+    print(f"Linha: {linha_maior + 1}")
+    print(f"Coluna: {coluna_maior + 1}")
+
+if __name__ == "__main__":
+    main()
+Questão 5 - Defina uma estrutura que irá representar bandas de música.
+
+Essa estrutura deve ter o nome da banda, que tipo de música ela toca, o número de integrantes e em que posição do ranking essa banda está dentre as suas 5 bandas favoritas. Faça uma utilização desta struct preenchendo com valores e acessando-os.
+
+#include <stdio.h>
+
+// Definição da estrutura para representar bandas de música
+struct Banda {
+    char nome[50];
+    char tipo_musica[50];
+    int numero_integrantes;
+    int ranking_favorito;
+};
+
+int main() {
+    // Declaração e inicialização de uma instância da estrutura
+    struct Banda minha_banda_favorita = {"Led Zeppelin", "Rock", 4, 1};
+
+    // Acessando os valores da instância da estrutura e imprimindo na tela
+    printf("Nome da banda: %s\n", minha_banda_favorita.nome);
+    printf("Tipo de música: %s\n", minha_banda_favorita.tipo_musica);
+    printf("Número de integrantes: %d\n", minha_banda_favorita.numero_integrantes);
+    printf("Posição no ranking de favoritas: %d\n", minha_banda_favorita.ranking_favorito);
+
+    return 0;
+}
+
+Questão 06 - Você está implementando um sistema operacional e precisa gerenciar a ordem de execução de processos e threads. Qual estrutura de dados seria mais adequada? Explique resumidamente esta estrutura.
+class Banda:
+    def __init__(self, nome, tipo_musica, numero_integrantes, ranking_favorito):
+        self.nome = nome
+        self.tipo_musica = tipo_musica
+        self.numero_integrantes = numero_integrantes
+        self.ranking_favorito = ranking_favorito
+banda1 = Banda("Led Zeppelin", "Rock", 4, 1)
+banda2 = Banda("The Beatles", "Rock", 4, 2)
+banda3 = Banda("Queen", "Rock", 4, 3)
+banda4 = Banda("Metallica", "Heavy Metal", 4, 4)
+banda5 = Banda("Pink Floyd", "Rock Progressivo", 4, 5)
+
+print("Nome da banda: ", banda1.nome)
+print("Tipo de música: ", banda1.tipo_musica)
+print("Número de integrantes: ", banda1.numero_integrantes)
+print("Posição no ranking de favoritas: ", banda1.ranking_favorito)
+
+Questão 07 - Você está implementando uma função em seu sistema que ao ser executada desfaz ou refaz a última ação tomada . Qual estrutura de dados seria mais adequada? Explique resumidamente esta estrutura.
+
+A pilha é uma estrutura de dados linear que segue o princípio, o último elemento inserido é o primeiro a ser removido. Isso é ideal para desfazer e refazer ações
+
+Questão 08 - Implemente um código que possua uma função que troca valores das variáveis utilizando ponteiros.
+
+#include <stdio.h>
+
+// Função para trocar valores de duas variáveis usando ponteiros
+void trocar_valores(int *ptr1, int *ptr2) {
+    int temp = *ptr1;
+    *ptr1 = *ptr2;
+    *ptr2 = temp;
+}
+
+int main() {
+    int a = 10;
+    int b = 20;
+
+    printf("Valores antes da troca: a = %d, b = %d\n", a, b);
+    trocar_valores(&a, &b);
+
+    printf("Valores após a troca: a = %d, b = %d\n", a, b);
+
+    return 0;
+}
